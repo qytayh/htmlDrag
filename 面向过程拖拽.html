@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面向过程实现拖拽</title>
+    <style>
+        .drag1{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="drag1"></div>
+    <script>
+        let drag1 = document.querySelector('.drag1')
+        drag1.onmousedown= e=>{
+            let ev = e || window.event;
+            let x = ev.clientX - drag1.offsetLeft
+            let y = ev.clientY - drag1.offsetTop
+            drag1.onmousemove = e =>{
+                let ev = e || window.event;
+                let xx = ev.clientX 
+                let yy = ev.clientY
+                drag1.style.left = xx-x+'px'
+                drag1.style.top = yy-y+'px'
+            }
+            document.onmouseup = function(){
+                drag1.onmousemove=''
+            }
+        }
+    </script>
+</body>
+</html>
