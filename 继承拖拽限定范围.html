@@ -24,8 +24,6 @@
     <div class="drag1"></div>
     <div class="drag2"></div>
     <script>
-       
-
         function Drag(ele){
             this.ele = ele
             this.downFn()
@@ -61,13 +59,24 @@
         }
 
         let drag1div = document.querySelector('.drag1')
+        let drag1 = new Drag(drag1div)
+
+        function LimitDrag(ele){
+            Drag.call(this,ele)
+        }
+        function Link(){}
+        Link.prototype = Drag.prototype
+        LimitDrag.prototype = new Link()
+        LimitDrag.prototype.constructor = LimitDrag
         let drag2div = document.querySelector('.drag2')
+        // drag2 通过继承 实现限定范围拖拽
 
-        let drag1 =new Drag(drag1div)
-        let drag2 =new Drag(drag2div)
-
-
-
+        //重写setstyle方法使得不能拖动到界面外
+        LimitDrag.prototype.setStyle = function(x,y){
+            this.ele.style.left = x<0?0:x+'px'
+            this.ele.style.top = y<0?0:y+'px'
+        }
+        let drag2 = new LimitDrag(drag2div)
     </script>
 </body>
 </html>
